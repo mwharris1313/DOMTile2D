@@ -22,7 +22,7 @@ var main = function(){
 
   init();
 
-  var images = ['<img src="assets/blank32.jpg">', '<img src="assets/image32.jpg">'];
+  var images = ['TRANSPARENT_RESERVED', '<img src="assets/blank32.jpg">', '<img src="assets/image32.jpg">'];
   var tiles = [];
   var MAX_TILES = g.screen.tileWidth * g.screen.tileHeight;
   var isBlank = false;
