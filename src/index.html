@@ -1,13 +1,32 @@
 <html>
 
 <head>
+
+<style>
+.screen {
+  background-color: black;
+  width:  256px;
+  height: 256px;
+  overflow: hidden;
+}
+
+.tilegroup {
+  background-color: green;
+  width:  288px;
+  height: 288px;
+}
+
+</style>
 <script src="underscore-min.js"></script>
 <script src="jquery-min.js"></script>
+<script src="assets/worldmap.json"></script>
 <script src="main.js"></script>
 </head>
 
 <body>
-  <span id="screen"></span>
+  <div id="screen" class="screen">
+    <div id="tilegroup" class="tilegroup"></div>
+  </div>
 </body>
 
 </html>
