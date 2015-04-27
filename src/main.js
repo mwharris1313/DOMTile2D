@@ -4,7 +4,8 @@ $(document).ready(function(){
 
 var main = function(){
   console.log('Starting main() ....');
-  var template = _.template('<img src="http://tinyurl.com/n4vgcl5">');
+  var template = _.template('<img src="assets/image.jpg">');
   console.log(template({}));
 
+  $('body').append(template(''));
 };
