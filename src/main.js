@@ -5,8 +5,12 @@ g.tile.height = 32;
 g.screen = {};
 g.screen.width = 512;
 g.screen.height = 288;
+// g.screen.width = 1024;
+// g.screen.height = 576;
 g.screen.tileWidth = 17;
 g.screen.tileHeight = 10;
+// g.screen.tileWidth = 33;
+// g.screen.tileHeight = 19;
 g.screenArr = [];
 g.worldmap = {};
 g.worldmap.tileWidth = worldmap.width;
@@ -14,7 +18,8 @@ g.worldmap.tileHeight = worldmap.height;
 g.worldmap.width = g.worldmap.tileWidth * g.tile.width;
 g.worldmap.height = g.worldmap.tileHeight * g.tile.height;
 g.worldArr = [];
-g.toggle = false;
+g.toggle = true;
+g.adder = 3;
 
 g.cam = {};
 g.cam.x = 0;
@@ -62,7 +67,7 @@ var init = function(){
   var tileNumber = 0;
   for (var y=0; y<g.worldmap.tileHeight; y++){
     for (var x=0; x<g.worldmap.tileWidth; x++){
-      g.worldArr[y][x] = tilearray[tileNumber];
+      g.worldArr[x][y] = tilearray[tileNumber];
       tileNumber++;
     }
   }
@@ -71,7 +76,7 @@ var init = function(){
   for (var y=0; y<g.worldmap.tileHeight; y++){
     var rowStr = '';
     for (var x=0; x<g.worldmap.tileWidth; x++){
-      rowStr += g.worldArr[y][x];
+      rowStr += g.worldArr[x][y];
     }
   }
 
@@ -159,15 +164,40 @@ var screenInit = function(){
   // console.log(g.tilegroup.element.offsetLeft, g.tilegroup.element.offsetTop);
   //console.log(g.tilegroup.element.offsetLeft, g.tilegroup.element.offsetTop);
     // console.dir(g.tilegroup.element);
+  window.requestAnimationFrame(renderScreen);
 };
 
 // ******************************************************************
 var renderScreen = function(){
+  requestAnimationFrame(renderScreen);
   //console.log('Starting renderScreen() ...');
 
-  if (g.cam.x < g.screen.width && g.cam.y < g.screen.height) {
-    g.cam.x++;
-    g.cam.y++;
+  // demo scroll
+  if (g.cam.x < (g.worldmap.width-g.screen.width) && g.cam.y < (g.worldmap.height-g.screen.height)) {
+    g.cam.x+=3*g.adder;
+    g.cam.y+=1*g.adder;
+
+    if (g.toggle) {
+      var test1 = g.cam.x >= (g.worldmap.width-g.screen.width);
+      var test2 = g.cam.y >= (g.worldmap.height-g.screen.height);
+      if (test1)  g.cam.x = g.worldmap.width-g.screen.width-1;
+      if (test2) g.cam.y = g.worldmap.height-g.screen.height-1;
+
+      if (test1 && test2) {
+        g.adder = -g.adder;
+        g.toggle = !g.toggle;
+      }      
+    } else {
+      if (g.cam.x <= 0)  g.cam.x = 0;
+      if (g.cam.y <= 0) g.cam.y = 0;
+
+      if (g.cam.x <= 0 && g.cam.y <= 0) {
+        g.adder = -g.adder;
+        g.toggle = !g.toggle;
+      }
+
+    }
+
   }
 
   var xGroupOffset = g.cam.x % g.tile.width;
@@ -196,7 +226,7 @@ var renderScreen = function(){
 
 };
 
-setInterval(renderScreen, 0); // using setInterval for testing, will replace with requestAnimationFrame
+//setInterval(renderScreen, 0); // using setInterval for testing, will replace with requestAnimationFrame
 // ******************************************************************
 
 
