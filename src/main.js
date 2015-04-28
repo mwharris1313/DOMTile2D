@@ -17,13 +17,13 @@ g.worldArr = [];
 g.toggle = false;
 
 g.cam = {};
-g.cam.x = 80;
-g.cam.y = 4;
+g.cam.x = 0;
+g.cam.y = 0;
 g.cam.xTile = 0;
 g.cam.yTile = 0;
 g.cam.getXYTile = function(){
   var xTile = Math.floor(g.cam.x / g.tile.width);
-  var yTile = Math.floor(g.cam.x / g.tile.height);
+  var yTile = Math.floor(g.cam.y / g.tile.height);
   return [xTile, yTile];
 };
 
@@ -51,9 +51,7 @@ var init = function(){
   console.log('SCREEN TILE WxH: ', g.screen.tileWidth, g.screen.tileHeight);
   console.log('WORLDMAP: ', g.worldmap.width, g.worldmap.height);
 
-  console.dir(worldmap);
   var tilearray = worldmap.layers[0].data;
-  console.log(tilearray);
 
   // initialize 2d world array
   for (var i=0; i<g.worldmap.tileHeight; i++){
@@ -75,7 +73,6 @@ var init = function(){
     for (var x=0; x<g.worldmap.tileWidth; x++){
       rowStr += g.worldArr[x][y];
     }
-    console.log(rowStr);
   }
 
 };
@@ -92,7 +89,6 @@ var screenInit = function(){
   for (var i=0; i<g.screen.tileHeight; i++){
     g.screenArr.push(Array(g.screen.tileWidth + 1).join('0').split(''));
   }
-  console.dir(g.screenArr);
 
   // load empty objects into screenArr
   var tileNumber = 0;
@@ -157,15 +153,22 @@ var screenInit = function(){
   // g.tilegroup.element.offsetTop = -15;//-32 + yGroupOffset;
 
 
-  console.log(g.tilegroup.element.offsetLeft, g.tilegroup.element.offsetTop);
+  // console.log(g.tilegroup.element.offsetLeft, g.tilegroup.element.offsetTop);
   //console.log(g.tilegroup.element.offsetLeft, g.tilegroup.element.offsetTop);
-  console.dir(g.tilegroup.element);
-
+    // console.dir(g.tilegroup.element);
 };
 
 // ******************************************************************
 var renderScreen = function(){
   //console.log('Starting renderScreen() ...');
+  g.cam.x++;
+  g.cam.y++;
+
+  var xGroupOffset = g.cam.x % g.tile.width;
+  var yGroupOffset = g.cam.y % g.tile.height;  g.tilegroup.element.style.left = -xGroupOffset;
+  g.tilegroup.element.style.top = -yGroupOffset;
+
+
   var xyTile = g.cam.getXYTile();
   var xTile = xyTile[0];
   var yTile = xyTile[1];
@@ -187,7 +190,7 @@ var renderScreen = function(){
 
 };
 
-setInterval(renderScreen, 50); // using setInterval for testing, will replace with requestAnimationFrame
+setInterval(renderScreen, 10); // using setInterval for testing, will replace with requestAnimationFrame
 // ******************************************************************
 
 
