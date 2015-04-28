@@ -7,12 +7,17 @@ g.screen.width = 256;
 g.screen.height = 256;
 g.screen.tileWidth = 9;
 g.screen.tileHeight = 9;
+g.screenArr = [];
 g.worldmap = {};
 g.worldmap.tileWidth = worldmap.width;
 g.worldmap.tileHeight = worldmap.height;
 g.worldmap.width = g.worldmap.tileWidth * g.tile.width;
 g.worldmap.height = g.worldmap.tileHeight * g.tile.height;
 g.worldArr = [];
+g.toggle = false;
+
+g.images = ['', 'assets/blank32.jpg' , 'assets/image32.jpg'];
+
 $(document).ready(function(){
   main();
 });
@@ -37,12 +42,12 @@ var init = function(){
   var tilearray = worldmap.layers[0].data;
   console.log(tilearray);
 
-  // initial 2d world array
+  // initialize 2d world array
   for (var i=0; i<g.worldmap.tileHeight; i++){
     g.worldArr.push(Array(g.worldmap.tileWidth + 1).join('0').split(''));
   }
 
-  // load worldmap data into worldMap 2d array
+  // load worldmap data into worldArr 2d array
   var tileNumber = 0;
   for (var y=0; y<g.worldmap.tileHeight; y++){
     for (var x=0; x<g.worldmap.tileWidth; x++){
@@ -70,15 +75,30 @@ var screenInit = function(){
   var MAX_TILES = g.screen.tileWidth * g.screen.tileHeight;
   var isBlank = false;
 
-  // test render
+  // initialize 2d screen array
+  for (var i=0; i<g.screen.tileHeight; i++){
+    g.screenArr.push(Array(g.screen.tileWidth + 1).join('0').split(''));
+  }
+  console.dir(g.screenArr);
+
+  // load empty objects into screenArr
+  var tileNumber = 0;
   for (var y=0; y<g.screen.tileHeight; y++){
     for (var x=0; x<g.screen.tileWidth; x++){
       var imageIndex = g.worldArr[x][y];
       var template = _.template(images[imageIndex]);
-      tiles.push(template(''));
+      g.screenArr[x][y] = {template:template('')};
     }
   }
 
+
+  // push template to tiles array (to be appended to screen element)
+  for (var y=0; y<g.screen.tileHeight; y++){
+    for (var x=0; x<g.screen.tileWidth; x++){
+      console.log(g.screenArr[x][y].template);
+      tiles.push(g.screenArr[x][y].template);
+    }
+  }
 
   // for (var i=0; i<MAX_TILES; i++){
   //   if (isBlank) {
@@ -93,16 +113,24 @@ var screenInit = function(){
   for (i=0; i<MAX_TILES; i++){
     $('#tilegroup').append(tiles[i]);
   }
+  console.dir($('#tilegroup')[0].children[0].src);
+
+  // test, way to change images of img
+  setTimeout(function(){
+    $('#tilegroup')[0].children[0].src = g.images[1];
+  }, 3000);
+  setTimeout(function(){
+    $('#tilegroup')[0].children[0].src = g.images[2];
+  }, 5000);
+
 
 };
 
 // ******************************************************************
-var renderScreen = function(){
+var renderScreen = function(xTile, yTile){
 
 };
 
 // ******************************************************************
-
-
 
 
