@@ -17,10 +17,15 @@ g.worldArr = [];
 g.toggle = false;
 
 g.cam = {};
-g.cam.x = 32;
-g.cam.y = 32;
-g.cam.xTile = 16;
-g.cam.yTile = 16;
+g.cam.x = 80;
+g.cam.y = 4;
+g.cam.xTile = 0;
+g.cam.yTile = 0;
+g.cam.getXYTile = function(){
+  var xTile = Math.floor(g.cam.x / g.tile.width);
+  var yTile = Math.floor(g.cam.x / g.tile.height);
+  return [xTile, yTile];
+};
 
 g.tilegroup = {};
 
@@ -161,12 +166,15 @@ var screenInit = function(){
 // ******************************************************************
 var renderScreen = function(){
   //console.log('Starting renderScreen() ...');
+  var xyTile = g.cam.getXYTile();
+  var xTile = xyTile[0];
+  var yTile = xyTile[1];
 
   for (var y=0; y<g.screen.tileHeight; y++){
     for (var x=0; x<g.screen.tileWidth; x++){
 
       var screenTile = g.screenArr[x][y];
-      var worldTile = g.worldArr[g.cam.xTile + x][g.cam.yTile + y];
+      var worldTile = g.worldArr[xTile + x][yTile + y];
 
       // is the screen tile not up to date with the world map?
       if (screenTile.imageIndex !== worldTile) {
@@ -179,7 +187,7 @@ var renderScreen = function(){
 
 };
 
-//setInterval(renderScreen, 50); // using setInterval for testing, will replace with requestAnimationFrame
+setInterval(renderScreen, 50); // using setInterval for testing, will replace with requestAnimationFrame
 // ******************************************************************
 
 
