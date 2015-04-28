@@ -157,6 +157,8 @@ var screenInit = function(){
 
   //console.dir($('#tilegroup')[0]);
   g.tilegroup.element = $('#tilegroup')[0];
+  g.tilegroup.element.addEventListener('click', onClick, false);
+
   var xGroupOffset = g.cam.x % g.tile.width;
   var yGroupOffset = g.cam.y % g.tile.height;
   console.log(xGroupOffset, yGroupOffset);
@@ -179,44 +181,44 @@ var renderScreen = function(){
   requestAnimationFrame(renderScreen);
   //console.log('Starting renderScreen() ...');
 
-  // demo scroll
-  if (g.cam.x < (g.worldmap.width-g.screen.width) && g.cam.y < (g.worldmap.height-g.screen.height)) {
-    g.cam.x+=1*g.xAdder;
-    g.cam.y+=1*g.yAdder;
+  // // demo scroll
+  // if (g.cam.x < (g.worldmap.width-g.screen.width) && g.cam.y < (g.worldmap.height-g.screen.height)) {
+  //   g.cam.x+=1*g.xAdder;
+  //   g.cam.y+=1*g.yAdder;
 
-    if (g.toggle) {
-      var test1 = g.cam.x >= (g.worldmap.width-g.screen.width);
-      var test2 = g.cam.y >= (g.worldmap.height-g.screen.height);
-      if (test1)  g.cam.x = g.worldmap.width-g.screen.width-1;
-      if (test2) g.cam.y = g.worldmap.height-g.screen.height-1;
+  //   if (g.toggle) {
+  //     var test1 = g.cam.x >= (g.worldmap.width-g.screen.width);
+  //     var test2 = g.cam.y >= (g.worldmap.height-g.screen.height);
+  //     if (test1)  g.cam.x = g.worldmap.width-g.screen.width-1;
+  //     if (test2) g.cam.y = g.worldmap.height-g.screen.height-1;
 
-      if (test1) {
-        g.xAdder = -g.xAdder;
-        g.toggle = !g.toggle;
-      }      
+  //     if (test1) {
+  //       g.xAdder = -g.xAdder;
+  //       g.toggle = !g.toggle;
+  //     }      
 
-      if (test2) {
-        g.yAdder = -g.yAdder;
-        g.toggle = !g.toggle;
-      }      
+  //     if (test2) {
+  //       g.yAdder = -g.yAdder;
+  //       g.toggle = !g.toggle;
+  //     }      
 
-    } else {
-      if (g.cam.x <= 0)  g.cam.x = 0;
-      if (g.cam.y <= 0) g.cam.y = 0;
+  //   } else {
+  //     if (g.cam.x <= 0)  g.cam.x = 0;
+  //     if (g.cam.y <= 0) g.cam.y = 0;
 
-      if (g.cam.x <= 0) {
-        g.xAdder = -g.xAdder;
-        g.toggle = !g.toggle;
-      }
+  //     if (g.cam.x <= 0) {
+  //       g.xAdder = -g.xAdder;
+  //       g.toggle = !g.toggle;
+  //     }
 
-      if (g.cam.y <= 0) {
-        g.yAdder = -g.yAdder;
-        g.toggle = !g.toggle;
-      }
+  //     if (g.cam.y <= 0) {
+  //       g.yAdder = -g.yAdder;
+  //       g.toggle = !g.toggle;
+  //     }
 
-    }
+  //   }
 
-  }
+  // }
 
 
 
@@ -246,6 +248,16 @@ var renderScreen = function(){
 
 };
 
+var onClick = function(evt){
+  console.log('Starting onClick() ...');
+  console.dir(evt);
+  console.log(evt.x, evt.y);
+
+  var xDelta = evt.x - Math.floor(g.screen.width/2);
+  var yDelta = evt.y - Math.floor(g.screen.height/2);
+  g.cam.x += xDelta;
+  g.cam.y += yDelta;
+};
 //setInterval(renderScreen, 0); // using setInterval for testing, will replace with requestAnimationFrame
 // ******************************************************************
 
