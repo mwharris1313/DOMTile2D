@@ -3,14 +3,14 @@ g.tile = {};
 g.tile.width = 32;
 g.tile.height = 32;
 g.screen = {};
-g.screen.width = 512;
-g.screen.height = 288;
-// g.screen.width = 1024;
-// g.screen.height = 576;
-g.screen.tileWidth = 17;
-g.screen.tileHeight = 10;
-// g.screen.tileWidth = 33;
-// g.screen.tileHeight = 19;
+// g.screen.width = 512;
+// g.screen.height = 288;
+g.screen.width = 1024;
+g.screen.height = 512;
+// g.screen.tileWidth = 17;
+// g.screen.tileHeight = 10;
+g.screen.tileWidth = 33;
+g.screen.tileHeight = 17;
 g.screenArr = [];
 g.worldmap = {};
 g.worldmap.tileWidth = worldmap.width;
@@ -19,7 +19,9 @@ g.worldmap.width = g.worldmap.tileWidth * g.tile.width;
 g.worldmap.height = g.worldmap.tileHeight * g.tile.height;
 g.worldArr = [];
 g.toggle = true;
-g.adder = 3;
+g.adder = 2;
+g.xAdder = 6;
+g.yAdder = 2;
 
 g.cam = {};
 g.cam.x = 0;
@@ -34,7 +36,7 @@ g.cam.getXYTile = function(){
 
 g.tilegroup = {};
 
-g.images = ['', 'assets/blank32.jpg' , 'assets/image32.jpg'];
+g.images = ['', 'assets/dwCave32.png' , 'assets/dwGrass32.png', 'assets/dwHill32.png', 'assets/dwMountain32.png', 'assets/dwWall32.png', 'assets/dwGrass32.png', 'assets/dwGrass32.png', 'assets/dwGrass32.png'];
 
 $(document).ready(function(){
   main();
@@ -85,7 +87,8 @@ var init = function(){
 var screenInit = function(){
   console.log('Starting screenInit() ...');
 
-  var images = ['TRANSPARENT_RESERVED', '<img src="assets/blank32.jpg">', '<img src="assets/image32.jpg">'];
+  //var images = ['TRANSPARENT_RESERVED', '<img src="assets/blank32.jpg">', '<img src="assets/image32.jpg">'];
+  var images = ['TRANSPARENT_RESERVED', '<img src="assets/dwCave32.png">', '<img src="assets/dwGrass32.png">', '<img src="assets/dwHill32.png">', '<img src="assets/dwMountain32.png">', '<img src="assets/dwWall32.png">', '<img src="assets/dwGrass32.png">', '<img src="assets/dwGrass32.png">', '<img src="assets/dwGrass32.png">'];
   var tiles = [];
   var MAX_TILES = g.screen.tileWidth * g.screen.tileHeight;
   var isBlank = false;
@@ -102,6 +105,10 @@ var screenInit = function(){
 
       var imageIndex = g.worldArr[x][y];
       console.log('test', x, y);
+
+
+
+
       var template = _.template(images[imageIndex]);
       g.screenArr[y][x] = {template:template('')};
     }
@@ -174,8 +181,8 @@ var renderScreen = function(){
 
   // demo scroll
   if (g.cam.x < (g.worldmap.width-g.screen.width) && g.cam.y < (g.worldmap.height-g.screen.height)) {
-    g.cam.x+=3*g.adder;
-    g.cam.y+=1*g.adder;
+    g.cam.x+=1*g.xAdder;
+    g.cam.y+=1*g.yAdder;
 
     if (g.toggle) {
       var test1 = g.cam.x >= (g.worldmap.width-g.screen.width);
@@ -183,22 +190,35 @@ var renderScreen = function(){
       if (test1)  g.cam.x = g.worldmap.width-g.screen.width-1;
       if (test2) g.cam.y = g.worldmap.height-g.screen.height-1;
 
-      if (test1 && test2) {
-        g.adder = -g.adder;
+      if (test1) {
+        g.xAdder = -g.xAdder;
         g.toggle = !g.toggle;
       }      
+
+      if (test2) {
+        g.yAdder = -g.yAdder;
+        g.toggle = !g.toggle;
+      }      
+
     } else {
       if (g.cam.x <= 0)  g.cam.x = 0;
       if (g.cam.y <= 0) g.cam.y = 0;
 
-      if (g.cam.x <= 0 && g.cam.y <= 0) {
-        g.adder = -g.adder;
+      if (g.cam.x <= 0) {
+        g.xAdder = -g.xAdder;
+        g.toggle = !g.toggle;
+      }
+
+      if (g.cam.y <= 0) {
+        g.yAdder = -g.yAdder;
         g.toggle = !g.toggle;
       }
 
     }
 
   }
+
+
 
   var xGroupOffset = g.cam.x % g.tile.width;
   var yGroupOffset = g.cam.y % g.tile.height;  g.tilegroup.element.style.left = -xGroupOffset;

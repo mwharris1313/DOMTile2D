@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="120" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <tile id="0">
+   <image width="32" height="32" source="dwCave32.png"/>
+  </tile>
+  <tile id="1">
+   <image width="32" height="32" source="dwGrass32.png"/>
+  </tile>
+  <tile id="2">
+   <image width="32" height="32" source="dwHill32.png"/>
+  </tile>
+  <tile id="3">
+   <image width="32" height="32" source="dwMountain32.png"/>
+  </tile>
+  <tile id="4">
+   <image width="32" height="32" source="dwTree32.png"/>
+  </tile>
+  <tile id="5">
+   <image width="32" height="32" source="dwWall32.png"/>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="120" height="120">
+  <data encoding="base64" compression="zlib">
+   eJztnNtugzAQBaMk4v8/uepDJIRsbOPb7tl5GCkiBPCO95DWtMfr9TpAmjdIgl9trn6/Bq4J+jg7HNm/nxO7xwhz/KZeg02/rVmN333kXK3I59K21Lz4ZPZj3rQxI5+vvq7eU65TxyAP1vmtyeq7Pszt1/o5PLc5WfH9qiazn/Q4rPU7G/p3jV9+B7KP1tp76l9oB7/a9PodldXfEzXnuO6bep07Zutnd9+Pes5vpX9r6t36/qhtnlHz+3Qe3B3HMyP99tQklYWpXM2d5y6Ha7M4tW2X51Hntdy/13tgyW/uOKX37zx7x7rfksOnLvE7ztdMv0rfr2ac01L/1t5/34V91X4+UvALfv16nv+zmV0b+lcb/Gqz2i9ZvbYG9K82+NVmp99IWb1rrPSvNvjVxopfxay2MCYrfgG/Je7Wm+7WCnJrGwprDBb9Pq1l7Xpx7RrVk+uyNg8s+h01L2r81vqx5i2q39zzPDU5q+bWg9+W2pb6d5Zby/6t++2ZC6Vn7ka4tU40vynfuUzfPZ5ofi3V3NK1qPgF/IKGX5Xnk/EL+AVlvzNz02Mmq/kF/EZFze+IPPWeycp+Ab+RUPbbs7aogrJfwK86Ufy2rOsrEcXvP6n/Ja9OFL9Xt1EcR/P7ewYHv3pE691ofiMSwW/v35x4JoLfyOBXG1W/T3JXMatV/QJ+I6Dkd2S+qmS1kl/AbzS8+12Ro56z2rtfwG9kPPrdmZfestqjX8Av+PJrMRctXpNXv4Bf8OXXQ/5Zv1bLfgG/4Muv1ZzzOgZrfgG/4MuvpTxTG5sFv4Bf8OV3d27tYMeY6V9t8KvNSr8RM3l3LehfbfCrzWy/ZPLeGtG/2uBXmxl+yWQ7taN/tcGvNqP8ksnjGVFT+lcb/GrT45dMXsfTWtO/2uBXm1a/ZPJ+WhzQv9rgV5sav2SyXUpu6F9t8KtNzi+Z7I+UM/pXG/xqc/ZLJuvwc0n/anOAPH9Pvnph
+  </data>
+ </layer>
+</map>
