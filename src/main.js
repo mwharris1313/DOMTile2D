@@ -164,6 +164,7 @@ var screenInit = function(){
   //console.dir($('#tilegroup')[0]);
   g.tilegroup.element = $('#tilegroup')[0];
   g.tilegroup.element.addEventListener('click', onClick, false);
+  document.addEventListener("keydown", onKeydown, false);
 
   var xGroupOffset = g.cam.x % g.tile.width;
   var yGroupOffset = g.cam.y % g.tile.height;
@@ -228,17 +229,21 @@ var renderScreen = function(){
 
   if (g.isTransitioning) {
     //console.log('asdfasdfasdf');
-    if (Math.abs(g.cam.x-g.transitionTo.x) <= 4) {
+    if (Math.abs(g.cam.x-g.transitionTo.x) <= 1) {
       g.cam.x = g.transitionTo.x;
+      g.isTransitioning = false;
     } else {
-      g.cam.x = Math.floor((g.transitionTo.x - g.cam.x)/4) + g.cam.x;
+      g.cam.x = Math.floor(Math.sqrt(g.transitionTo.x - g.cam.x) + g.cam.x);
     }
 
-    if (Math.abs(g.cam.x-g.transitionTo.x) <= 4) {
+    if (Math.abs(g.cam.x-g.transitionTo.x) <= 1) {
       g.cam.y = g.transitionTo.y;
+      g.isTransitioning = false;
     } else {
-      g.cam.y = Math.floor((g.transitionTo.y - g.cam.y)/4) + g.cam.y;
+      g.cam.y = Math.floor(Math.sqrt(g.transitionTo.y - g.cam.y) + g.cam.y);
     }
+
+    console.log(g.cam.x, g.cam.y);
 
     //console.log('TESTXY',g.cam.x, g.cam.y,g.transitionTo.x, g.transitionTo.y);
   }
@@ -269,6 +274,7 @@ var renderScreen = function(){
 
 };
 
+
 var onClick = function(evt){
   console.log('Starting onClick() ...');
   console.dir(evt);
@@ -281,6 +287,29 @@ var onClick = function(evt){
   g.isTransitioning = true;
 
 };
+
+var onKeydown = function(evt){
+  var up = 87;
+  var down = 83;
+  var left = 65;
+  var right = 68;
+
+  if (evt.keyCode === up) {
+    console.log('up');
+  } else if (evt.keyCode === down) {
+    console.log('down');
+
+  } else if (evt.keyCode === left) {
+    console.log('left');
+
+  } else if (evt.keyCode === right) {
+    console.log('right');
+
+  }
+
+}
+
+
 //setInterval(renderScreen, 0); // using setInterval for testing, will replace with requestAnimationFrame
 // ******************************************************************
 
