@@ -23,6 +23,12 @@ g.adder = 2;
 g.xAdder = 6;
 g.yAdder = 2;
 
+
+g.isTransitioning = false;
+g.transitionTo = {};
+g.transitionTo.x = -1;
+g.transitionTo.y = -1;
+
 g.cam = {};
 g.cam.x = 0;
 g.cam.y = 0;
@@ -220,7 +226,22 @@ var renderScreen = function(){
 
   // }
 
+  if (g.isTransitioning) {
+    //console.log('asdfasdfasdf');
+    if (Math.abs(g.cam.x-g.transitionTo.x) <= 4) {
+      g.cam.x = g.transitionTo.x;
+    } else {
+      g.cam.x = Math.floor((g.transitionTo.x - g.cam.x)/4) + g.cam.x;
+    }
 
+    if (Math.abs(g.cam.x-g.transitionTo.x) <= 4) {
+      g.cam.y = g.transitionTo.y;
+    } else {
+      g.cam.y = Math.floor((g.transitionTo.y - g.cam.y)/4) + g.cam.y;
+    }
+
+    //console.log('TESTXY',g.cam.x, g.cam.y,g.transitionTo.x, g.transitionTo.y);
+  }
 
   var xGroupOffset = g.cam.x % g.tile.width;
   var yGroupOffset = g.cam.y % g.tile.height;  g.tilegroup.element.style.left = -xGroupOffset;
@@ -255,8 +276,10 @@ var onClick = function(evt){
 
   var xDelta = evt.x - Math.floor(g.screen.width/2);
   var yDelta = evt.y - Math.floor(g.screen.height/2);
-  g.cam.x += xDelta;
-  g.cam.y += yDelta;
+  g.transitionTo.x = g.cam.x + xDelta;
+  g.transitionTo.y = g.cam.y + yDelta;
+  g.isTransitioning = true;
+
 };
 //setInterval(renderScreen, 0); // using setInterval for testing, will replace with requestAnimationFrame
 // ******************************************************************
