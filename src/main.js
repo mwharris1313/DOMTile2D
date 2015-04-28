@@ -3,10 +3,10 @@ g.tile = {};
 g.tile.width = 32;
 g.tile.height = 32;
 g.screen = {};
-g.screen.width = 256;
-g.screen.height = 256;
-g.screen.tileWidth = 9;
-g.screen.tileHeight = 9;
+g.screen.width = 512;
+g.screen.height = 288;
+g.screen.tileWidth = 17;
+g.screen.tileHeight = 10;
 g.screenArr = [];
 g.worldmap = {};
 g.worldmap.tileWidth = worldmap.width;
@@ -62,7 +62,7 @@ var init = function(){
   var tileNumber = 0;
   for (var y=0; y<g.worldmap.tileHeight; y++){
     for (var x=0; x<g.worldmap.tileWidth; x++){
-      g.worldArr[x][y] = tilearray[tileNumber];
+      g.worldArr[y][x] = tilearray[tileNumber];
       tileNumber++;
     }
   }
@@ -71,7 +71,7 @@ var init = function(){
   for (var y=0; y<g.worldmap.tileHeight; y++){
     var rowStr = '';
     for (var x=0; x<g.worldmap.tileWidth; x++){
-      rowStr += g.worldArr[x][y];
+      rowStr += g.worldArr[y][x];
     }
   }
 
@@ -94,16 +94,19 @@ var screenInit = function(){
   var tileNumber = 0;
   for (var y=0; y<g.screen.tileHeight; y++){
     for (var x=0; x<g.screen.tileWidth; x++){
+
       var imageIndex = g.worldArr[x][y];
+      console.log('test', x, y);
       var template = _.template(images[imageIndex]);
-      g.screenArr[x][y] = {template:template('')};
+      g.screenArr[y][x] = {template:template('')};
     }
   }
+
 
   // push template to tiles array (to be appended to screen element)
   for (var y=0; y<g.screen.tileHeight; y++){
     for (var x=0; x<g.screen.tileWidth; x++){
-      tiles.push(g.screenArr[x][y].template);
+      tiles.push(g.screenArr[y][x].template);
     }
   }
 
@@ -116,8 +119,8 @@ var screenInit = function(){
   var elementIndex = 0;
   for (var y=0; y<g.screen.tileHeight; y++){
     for (var x=0; x<g.screen.tileWidth; x++){
-      g.screenArr[x][y].element = $('#tilegroup')[0].children[elementIndex];
-      g.screenArr[x][y].src = $('#tilegroup')[0].children[elementIndex].src;
+      g.screenArr[y][x].element = $('#tilegroup')[0].children[elementIndex];
+      g.screenArr[y][x].src = $('#tilegroup')[0].children[elementIndex].src;
       elementIndex++;
     }
   }
@@ -128,8 +131,8 @@ var screenInit = function(){
   for (var y=0; y<g.screen.tileHeight; y++){
     for (var x=0; x<g.screen.tileWidth; x++){
       var imageIndex = g.worldArr[x][y];
-      g.screenArr[x][y].src = g.images[imageIndex];
-      g.screenArr[x][y].imageIndex = imageIndex;
+      g.screenArr[y][x].src = g.images[imageIndex];
+      g.screenArr[y][x].imageIndex = imageIndex;
     }
   }
 
@@ -161,8 +164,11 @@ var screenInit = function(){
 // ******************************************************************
 var renderScreen = function(){
   //console.log('Starting renderScreen() ...');
-  g.cam.x++;
-  g.cam.y++;
+
+  if (g.cam.x < g.screen.width && g.cam.y < g.screen.height) {
+    g.cam.x++;
+    g.cam.y++;
+  }
 
   var xGroupOffset = g.cam.x % g.tile.width;
   var yGroupOffset = g.cam.y % g.tile.height;  g.tilegroup.element.style.left = -xGroupOffset;
@@ -176,7 +182,7 @@ var renderScreen = function(){
   for (var y=0; y<g.screen.tileHeight; y++){
     for (var x=0; x<g.screen.tileWidth; x++){
 
-      var screenTile = g.screenArr[x][y];
+      var screenTile = g.screenArr[y][x];
       var worldTile = g.worldArr[xTile + x][yTile + y];
 
       // is the screen tile not up to date with the world map?
@@ -190,7 +196,7 @@ var renderScreen = function(){
 
 };
 
-setInterval(renderScreen, 10); // using setInterval for testing, will replace with requestAnimationFrame
+setInterval(renderScreen, 0); // using setInterval for testing, will replace with requestAnimationFrame
 // ******************************************************************
 
 
