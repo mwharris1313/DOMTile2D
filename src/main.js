@@ -17,11 +17,12 @@ g.worldArr = [];
 g.toggle = false;
 
 g.cam = {};
-g.cam.x = 0;
-g.cam.y = 0;
+g.cam.x = 32;
+g.cam.y = 32;
 g.cam.xTile = 16;
 g.cam.yTile = 16;
 
+g.tilegroup = {};
 
 g.images = ['', 'assets/blank32.jpg' , 'assets/image32.jpg'];
 
@@ -98,7 +99,6 @@ var screenInit = function(){
     }
   }
 
-
   // push template to tiles array (to be appended to screen element)
   for (var y=0; y<g.screen.tileHeight; y++){
     for (var x=0; x<g.screen.tileWidth; x++){
@@ -139,6 +139,23 @@ var screenInit = function(){
   //   }
   // }
 
+  //console.dir($('#tilegroup')[0]);
+  g.tilegroup.element = $('#tilegroup')[0];
+  var xGroupOffset = g.cam.x % g.tile.width;
+  var yGroupOffset = g.cam.y % g.tile.height;
+  console.log(xGroupOffset, yGroupOffset);
+
+  g.tilegroup.element.style.left = -xGroupOffset;
+  g.tilegroup.element.style.top = -yGroupOffset;
+
+  // g.tilegroup.element.offsetLeft = 4;//-32 + xGroupOffset;
+  // g.tilegroup.element.offsetTop = -15;//-32 + yGroupOffset;
+
+
+  console.log(g.tilegroup.element.offsetLeft, g.tilegroup.element.offsetTop);
+  //console.log(g.tilegroup.element.offsetLeft, g.tilegroup.element.offsetTop);
+  console.dir(g.tilegroup.element);
+
 };
 
 // ******************************************************************
@@ -162,7 +179,7 @@ var renderScreen = function(){
 
 };
 
-setInterval(renderScreen, 50); // using setInterval for testing, will replace with requestAnimationFrame
+//setInterval(renderScreen, 50); // using setInterval for testing, will replace with requestAnimationFrame
 // ******************************************************************
 
 
