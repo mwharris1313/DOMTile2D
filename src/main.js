@@ -95,34 +95,41 @@ var screenInit = function(){
   // push template to tiles array (to be appended to screen element)
   for (var y=0; y<g.screen.tileHeight; y++){
     for (var x=0; x<g.screen.tileWidth; x++){
-      console.log(g.screenArr[x][y].template);
       tiles.push(g.screenArr[x][y].template);
     }
   }
 
-  // for (var i=0; i<MAX_TILES; i++){
-  //   if (isBlank) {
-  //     var template = _.template(images[0]);
-  //   } else {
-  //     var template = _.template(images[1]);      
-  //   }
-  //   isBlank = !isBlank;
-  //   tiles.push(template(''));
-  // }
-
+  // append each tile to the tilegroup
   for (i=0; i<MAX_TILES; i++){
     $('#tilegroup').append(tiles[i]);
   }
-  console.dir($('#tilegroup')[0].children[0].src);
 
-  // test, way to change images of img
-  setTimeout(function(){
-    $('#tilegroup')[0].children[0].src = g.images[1];
-  }, 3000);
-  setTimeout(function(){
-    $('#tilegroup')[0].children[0].src = g.images[2];
-  }, 5000);
+  // keep a reference of each child on its corresponding g.screenArr object
+  var elementIndex = 0;
+  for (var y=0; y<g.screen.tileHeight; y++){
+    for (var x=0; x<g.screen.tileWidth; x++){
+      g.screenArr[x][y].element = $('#tilegroup')[0].children[elementIndex];
+      g.screenArr[x][y].src = $('#tilegroup')[0].children[elementIndex].src;
+      elementIndex++;
+    }
+  }
 
+
+  // place relative paths in each img src tag "assets/image32.jpg"
+  var tileNumber = 0;
+  for (var y=0; y<g.screen.tileHeight; y++){
+    for (var x=0; x<g.screen.tileWidth; x++){
+      var imageIndex = g.worldArr[x][y];
+      g.screenArr[x][y].src = g.images[imageIndex];
+    }
+  }
+
+  // for (var y=0; y<g.screen.tileHeight; y++){
+  //   for (var x=0; x<g.screen.tileWidth; x++){
+  //     var imageIndex = g.worldArr[x][y];
+  //     g.screenArr[x][y].src = g.images[imageIndex];
+  //   }
+  // }
 
 };
 
