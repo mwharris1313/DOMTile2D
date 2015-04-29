@@ -3,13 +3,13 @@ g.tile = {};
 g.tile.width = 32;
 g.tile.height = 32;
 g.screen = {};
-// g.screen.width = 512;
-// g.screen.height = 288;
-g.screen.width = 1024;
+g.screen.width = 640;
 g.screen.height = 512;
+// g.screen.width = 1024;
+// g.screen.height = 512;
 // g.screen.tileWidth = 17;
 // g.screen.tileHeight = 10;
-g.screen.tileWidth = 33;
+g.screen.tileWidth = 25;
 g.screen.tileHeight = 17;
 g.screenArr = [];
 g.worldmap = {};
@@ -130,7 +130,7 @@ var screenInit = function(){
     for (var x=0; x<g.screen.tileWidth; x++){
 
       var imageIndex = g.worldArr[x][y];
-      console.log('test', x, y);
+      // console.log('test', x, y);
 
 
 
@@ -189,7 +189,7 @@ var screenInit = function(){
 
   var xGroupOffset = g.cam.x % g.tile.width;
   var yGroupOffset = g.cam.y % g.tile.height;
-  console.log(xGroupOffset, yGroupOffset);
+  // console.log(xGroupOffset, yGroupOffset);
 
   g.tilegroup.element.style.left = -xGroupOffset;
   g.tilegroup.element.style.top = -yGroupOffset;
@@ -251,7 +251,7 @@ var renderScreen = function(){
   // console.log('XY1', g.cam.x,g.cam.y);
   // if (g.key.xDelta !== 0) g.cam.x += g.key.xDelta;
   // if (g.key.yDelta !== 0) g.cam.y += g.key.yDelta;
-  console.log('DELTA:',g.key.xDelta, g.key.yDelta);
+  // console.log('DELTA:',g.key.xDelta, g.key.yDelta);
   // if (!isNaN(g.key.xDelta) && g.key.xDelta !== undefined && g.key.xDelta !== 0) g.cam.x += g.key.xDelta;
   // if (!isNaN(g.key.xDelta) && g.key.yDelta !== undefined && g.key.yDelta !== 0) g.cam.y += g.key.yDelta;
   var delta = 20;
@@ -315,8 +315,8 @@ var renderScreen = function(){
 
 var onClick = function(evt){
   console.log('Starting onClick() ...');
-  console.dir(evt);
-  console.log(evt.x, evt.y);
+  // console.dir(evt);
+  // console.log(evt.x, evt.y);
 
   var xDelta = evt.x - Math.floor(g.screen.width/2);
   var yDelta = evt.y - Math.floor(g.screen.height/2);
@@ -338,7 +338,6 @@ var onKeydown = function(evt){
     g.key.xDelta = 0;
     g.key.yDelta = 0;    
   }
-
 
   if (evt.keyCode === up) {
     setKeyFalse();
@@ -368,5 +367,4 @@ var onKeyup = function(evt){
 }
 //setInterval(renderScreen, 0); // using setInterval for testing, will replace with requestAnimationFrame
 // ******************************************************************
-
 
