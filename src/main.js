@@ -1,5 +1,5 @@
 var g = {};
-g.tile = Tile({width:32, height:40});
+g.tile = Tile({width:32, height:32});
 g.screen = Screen({tile: g.tile, tileWidth: 20, tileHeight: 10});
 
 g.screenArr = [];
@@ -11,16 +11,8 @@ g.adder = 2;
 g.xAdder = 6;
 g.yAdder = 2;
 
-g.isTransitioning = false;
-g.transitionTo = {};
-g.transitionTo.x = -1;
-g.transitionTo.y = -1;
 
-g.cam = {};
-g.cam.x = 0;
-g.cam.y = 0;
-g.cam.xTile = 0;
-g.cam.yTile = 0;
+g.cam = Camera({});
 
 g.key = {};
 g.key.delta = 1;
@@ -208,24 +200,24 @@ var renderScreen = function(){
   if (g.isKeyRight) g.cam.x += delta;
 
   // TODO: research Robert Penner's Easing Functions...
-  if (g.isTransitioning) {
-    console.log('gTransition', g.cam.x-g.transitionTo.x);
+  if (g.cam.isTransitioning) {
+    console.log('gTransition', g.cam.x-g.cam.transitionTo.x);
     //console.log('asdfasdfasdf');
-    if (Math.abs(g.cam.x-g.transitionTo.x) <= 1) {
-      g.cam.x = g.transitionTo.x;
-      if (g.cam.x === g.transitionTo.x && g.cam.y === g.transitionTo.y) g.isTransitioning = false;
+    if (Math.abs(g.cam.x-g.cam.transitionTo.x) <= 1) {
+      g.cam.x = g.cam.transitionTo.x;
+      if (g.cam.x === g.cam.transitionTo.x && g.cam.y === g.cam.transitionTo.y) g.cam.isTransitioning = false;
     } else {
-      g.cam.x = Math.floor(Math.sqrt(g.transitionTo.x - g.cam.x) + g.cam.x);
+      g.cam.x = Math.floor(Math.sqrt(g.cam.transitionTo.x - g.cam.x) + g.cam.x);
     }
 
-    if (Math.abs(g.cam.x-g.transitionTo.x) <= 1) {
-      g.cam.y = g.transitionTo.y;
-      if (g.cam.x === g.transitionTo.x && g.cam.y === g.transitionTo.y) g.isTransitioning = false;
+    if (Math.abs(g.cam.x-g.cam.transitionTo.x) <= 1) {
+      g.cam.y = g.cam.transitionTo.y;
+      if (g.cam.x === g.cam.transitionTo.x && g.cam.y === g.cam.transitionTo.y) g.cam.isTransitioning = false;
     } else {
-      g.cam.y = Math.floor(Math.sqrt(g.transitionTo.y - g.cam.y) + g.cam.y);
+      g.cam.y = Math.floor(Math.sqrt(g.cam.transitionTo.y - g.cam.y) + g.cam.y);
     }
 
-    //console.log('TESTXY',g.cam.x, g.cam.y,g.transitionTo.x, g.transitionTo.y);
+    //console.log('TESTXY',g.cam.x, g.cam.y,g.cam.transitionTo.x, g.cam.transitionTo.y);
   }
 
   var xGroupOffset = g.cam.x % g.tile.width;
@@ -261,9 +253,9 @@ var onClick = function(evt){
 
   // var xDelta = evt.x - Math.floor(g.screen.width/2);
   // var yDelta = evt.y - Math.floor(g.screen.height/2);
-  // g.transitionTo.x = g.cam.x + xDelta;
-  // g.transitionTo.y = g.cam.y + yDelta;
-  // g.isTransitioning = true;
+  // g.cam.transitionTo.x = g.cam.x + xDelta;
+  // g.cam.transitionTo.y = g.cam.y + yDelta;
+  // g.cam.isTransitioning = true;
 
 };
 
