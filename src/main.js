@@ -3,11 +3,8 @@ g.tile = Tile({width:32, height:40});
 g.screen = Screen({tile: g.tile, tileWidth: 20, tileHeight: 10});
 
 g.screenArr = [];
-g.worldmap = {};
-g.worldmap.tileWidth = worldmap.width;
-g.worldmap.tileHeight = worldmap.height;
-g.worldmap.width = g.worldmap.tileWidth * g.tile.width;
-g.worldmap.height = g.worldmap.tileHeight * g.tile.height;
+g.worldmap = WorldMap({tile: g.tile, tileWidth: worldmap.width, tileHeight: worldmap.height});
+
 g.worldArr = [];
 g.toggle = true;
 g.adder = 2;
