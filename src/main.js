@@ -5,14 +5,13 @@ g.screen = Screen({tile: g.tile, tileWidth: 20, tileHeight: 10});
 g.screenArr = [];
 g.worldmap = WorldMap({tile: g.tile, tileWidth: worldmap.width, tileHeight: worldmap.height});
 
+g.cam = Camera({tile: g.tile});
+
 g.worldArr = [];
 g.toggle = true;
 g.adder = 2;
 g.xAdder = 6;
 g.yAdder = 2;
-
-
-g.cam = Camera({});
 
 g.key = {};
 g.key.delta = 1;
@@ -31,12 +30,6 @@ var setKeyFalse = function(){
   g.isKeyRight = false;
 }
 
-
-g.cam.getXYTile = function(){
-  var xTile = Math.floor(g.cam.x / g.tile.width);
-  var yTile = Math.floor(g.cam.y / g.tile.height);
-  return [xTile, yTile];
-};
 
 g.lastKeyState = '';
 
