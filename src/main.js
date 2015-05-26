@@ -1,16 +1,7 @@
 var g = {};
-g.tile = {};
-g.tile.width = 32;
-g.tile.height = 32;
-g.screen = {};
-g.screen.width = 640;
-g.screen.height = 512;
-// g.screen.width = 1024;
-// g.screen.height = 512;
-// g.screen.tileWidth = 17;
-// g.screen.tileHeight = 10;
-g.screen.tileWidth = 25;
-g.screen.tileHeight = 17;
+g.tile = Tile({width:32, height:40});
+g.screen = Screen({tile: g.tile, tileWidth: 20, tileHeight: 10});
+
 g.screenArr = [];
 g.worldmap = {};
 g.worldmap.tileWidth = worldmap.width;
@@ -83,6 +74,8 @@ var init = function(){
   console.log('SCREEN: ', g.screen.width, g.screen.height);
   console.log('SCREEN TILE WxH: ', g.screen.tileWidth, g.screen.tileHeight);
   console.log('WORLDMAP: ', g.worldmap.width, g.worldmap.height);
+  var sheets = document.styleSheets;
+  console.log(sheets);
 
   var tilearray = worldmap.layers[0].data;
 
@@ -201,6 +194,8 @@ var screenInit = function(){
   // console.log(g.tilegroup.element.offsetLeft, g.tilegroup.element.offsetTop);
   //console.log(g.tilegroup.element.offsetLeft, g.tilegroup.element.offsetTop);
     // console.dir(g.tilegroup.element);
+
+
   window.requestAnimationFrame(renderScreen);
 };
 
@@ -209,62 +204,11 @@ var renderScreen = function(){
   requestAnimationFrame(renderScreen);
   //console.log('Starting renderScreen() ...');
 
-  // // demo scroll
-  // if (g.cam.x < (g.worldmap.width-g.screen.width) && g.cam.y < (g.worldmap.height-g.screen.height)) {
-  //   g.cam.x+=1*g.xAdder;
-  //   g.cam.y+=1*g.yAdder;
-
-  //   if (g.toggle) {
-  //     var test1 = g.cam.x >= (g.worldmap.width-g.screen.width);
-  //     var test2 = g.cam.y >= (g.worldmap.height-g.screen.height);
-  //     if (test1)  g.cam.x = g.worldmap.width-g.screen.width-1;
-  //     if (test2) g.cam.y = g.worldmap.height-g.screen.height-1;
-
-  //     if (test1) {
-  //       g.xAdder = -g.xAdder;
-  //       g.toggle = !g.toggle;
-  //     }      
-
-  //     if (test2) {
-  //       g.yAdder = -g.yAdder;
-  //       g.toggle = !g.toggle;
-  //     }      
-
-  //   } else {
-  //     if (g.cam.x <= 0)  g.cam.x = 0;
-  //     if (g.cam.y <= 0) g.cam.y = 0;
-
-  //     if (g.cam.x <= 0) {
-  //       g.xAdder = -g.xAdder;
-  //       g.toggle = !g.toggle;
-  //     }
-
-  //     if (g.cam.y <= 0) {
-  //       g.yAdder = -g.yAdder;
-  //       g.toggle = !g.toggle;
-  //     }
-
-  //   }
-
-  // }
-
-  // console.log('XY1', g.cam.x,g.cam.y);
-  // if (g.key.xDelta !== 0) g.cam.x += g.key.xDelta;
-  // if (g.key.yDelta !== 0) g.cam.y += g.key.yDelta;
-  // console.log('DELTA:',g.key.xDelta, g.key.yDelta);
-  // if (!isNaN(g.key.xDelta) && g.key.xDelta !== undefined && g.key.xDelta !== 0) g.cam.x += g.key.xDelta;
-  // if (!isNaN(g.key.xDelta) && g.key.yDelta !== undefined && g.key.yDelta !== 0) g.cam.y += g.key.yDelta;
   var delta = 20;
   if (g.isKeyDown) g.cam.y += delta;
   if (g.isKeyUp) g.cam.y -= delta;
   if (g.isKeyLeft) g.cam.x -= delta;
   if (g.isKeyRight) g.cam.x += delta;
-
-  // if (!isNaN(g.key.xDelta) && g.key.xDelta !== undefined && g.key.xDelta !== 0) g.cam.x += g.key.xDelta;
-  // if (!isNaN(g.key.xDelta) && g.key.yDelta !== undefined && g.key.yDelta !== 0) g.cam.y += g.key.yDelta;
-  // console.log('XY2', g.cam.x,g.cam.y);
-
-  //console.log(g.cam.x,g.cam.y,g.key.xDelta,g.key.yDelta);
 
   // TODO: research Robert Penner's Easing Functions...
   if (g.isTransitioning) {
@@ -318,11 +262,11 @@ var onClick = function(evt){
   // console.dir(evt);
   // console.log(evt.x, evt.y);
 
-  var xDelta = evt.x - Math.floor(g.screen.width/2);
-  var yDelta = evt.y - Math.floor(g.screen.height/2);
-  g.transitionTo.x = g.cam.x + xDelta;
-  g.transitionTo.y = g.cam.y + yDelta;
-  g.isTransitioning = true;
+  // var xDelta = evt.x - Math.floor(g.screen.width/2);
+  // var yDelta = evt.y - Math.floor(g.screen.height/2);
+  // g.transitionTo.x = g.cam.x + xDelta;
+  // g.transitionTo.y = g.cam.y + yDelta;
+  // g.isTransitioning = true;
 
 };
 
