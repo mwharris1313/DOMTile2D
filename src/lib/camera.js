@@ -12,5 +12,13 @@ var Camera = function(parms) {
   cam.transitionTo.x = -1;
   cam.transitionTo.y = -1;
 
+  cam.getXYTile = function(){
+    var xTile = Math.floor(cam.x / parms.tile.width);
+    var yTile = Math.floor(cam.y / parms.tile.height);
+    return [xTile, yTile];
+  };
+
+
+
   return cam;
 };
