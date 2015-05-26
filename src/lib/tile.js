@@ -5,5 +5,5 @@ var Tile = function(parms) {
   tile.width = parms.width;
   tile.height = parms.height;
   return tile;
-}
+};
 

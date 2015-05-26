@@ -7,5 +7,5 @@ var Screen = function(parms) {
   screen.width = screen.tileWidth * parms.tile.width + parms.tile.width;
   screen.height = screen.tileHeight * parms.tile.height + parms.tile.height;
   return screen;
-}
+};
 
